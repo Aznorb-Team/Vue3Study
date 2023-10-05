@@ -1,44 +1,43 @@
 <template>
     <div class="app">
         <div>
-            <form @submit.prevent>
-                <h4>Создание поста</h4>
-                <input v-bind:value="title" @input="title = $event.target.value" class="input" type="text" name="" id="" placeholder="Название">
-                <input v-bind:value="body" @input="body = $event.target.value" class="input" type="text" name="" id="" placeholder="Описание">
-                <button class="btn" @click="createPost">Создать</button>
-            </form>
-        </div>
-        <div class="post" v-for="post in posts" :key="post.id">
-            <div><strong>Название:</strong> {{ post.title }}</div>
-            <div><strong>Описание:</strong> {{ post.body }}</div>
+            <post-form
+            @create="createPost">
+
+            </post-form>
+            <post-list 
+            
+            v-bind:posts="posts">
+
+            </post-list>
         </div>
     </div>
 </template>
 
 <script>
+    import PostForm from "@/components/PostForm.vue";
+    import PostList from "@/components/PostList.vue";
     export default{
+        components: {
+            PostForm, PostList,
+        },
         data(){
             return{
                 posts: [
-                    { id: 1, title: 'Название 1', body: 'Описание 1'},
-                    { id: 2, title: 'Название 2', body: 'Описание 2'},
-                    { id: 3, title: 'Название 3', body: 'Описание 3'},
-                    { id: 4, title: 'Название 4', body: 'Описание 4'},
+                    { id: 1, title: 'Название 1', body: 'Не следует, однако, забывать о том, что постоянное информационно-техническое обеспечение нашей деятельности обеспечивает широкому кругу специалистов участие в формировании экономической целесообразности принимаемых решений! Таким образом, выбранный нами инновационный путь играет важную роль в формировании форм воздействия. С другой стороны дальнейшее развитие различных форм деятельности требует от нас системного анализа модели развития?'},
+                    { id: 2, title: 'Название 2', body: 'Не следует, однако, забывать о том, что постоянное информационно-техническое обеспечение нашей деятельности обеспечивает широкому кругу специалистов участие в формировании экономической целесообразности принимаемых решений! Таким образом, выбранный нами инновационный путь играет важную роль в формировании форм воздействия. С другой стороны дальнейшее развитие различных форм деятельности требует от нас системного анализа модели развития?'},
+                    { id: 3, title: 'Название 3', body: 'Не следует, однако, забывать о том, что постоянное информационно-техническое обеспечение нашей деятельности обеспечивает широкому кругу специалистов участие в формировании экономической целесообразности принимаемых решений! Таким образом, выбранный нами инновационный путь играет важную роль в формировании форм воздействия. С другой стороны дальнейшее развитие различных форм деятельности требует от нас системного анализа модели развития?'},
+                    { id: 4, title: 'Название 4', body: 'Не следует, однако, забывать о том, что постоянное информационно-техническое обеспечение нашей деятельности обеспечивает широкому кругу специалистов участие в формировании экономической целесообразности принимаемых решений! Таким образом, выбранный нами инновационный путь играет важную роль в формировании форм воздействия. С другой стороны дальнейшее развитие различных форм деятельности требует от нас системного анализа модели развития?'},
                 ],
                 title: "",
                 body: "",
             }
         },
         methods: {
-            createPost(){
-                const newPost = {
-                    id: Date.now(),
-                    title: this.title,
-                    body: this.body,
+            createPost(post){
+                if(post.title != "" && post.body != ""){
+                    this.posts.push(post);
                 }
-                this.posts.push(newPost);
-                this.title = "";
-                this.body = "";
             },
         }
     }
@@ -56,31 +55,7 @@
     padding: 20px;
 }
 
-.post{
-    padding: 15px;
-    border: 2px solid teal;
-    margin-top: 15px;
-}
 
-form{
-    display: flex;
-    flex-direction: column;
-}
 
-.input{
-    width: 100%;
-    border: 1px solid teal;
-    padding: 10px 15px;
-    margin-top: 15px;
-}
-
-.btn{
-    margin-top: 15px;
-    align-self: flex-end;
-    padding: 10px 15px;
-    background: none;
-    color: teal;
-    border:1px solid teal;
-}
 
 </style>
