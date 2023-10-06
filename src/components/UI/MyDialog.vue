@@ -30,6 +30,7 @@ export default {
         background: rgba(0,0,0,0.5);
         position: fixed;
         display: flex;
+        z-index: 1000;
     }
     .dialog_content{
         margin: auto;
@@ -38,5 +39,6 @@ export default {
         min-height: 50px;
         min-width: 300px;
         padding: 20px;
+        border: 3px solid teal;
     }
 </style>

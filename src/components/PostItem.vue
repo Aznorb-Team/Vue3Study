@@ -1,8 +1,8 @@
 <template lang="">
-    <div class="blog_post">
+    <!-- <div class="blog_post">
         <div class="post">
             <div>
-                <div><h2>Название: {{ post.title }}</h2></div>
+                <div><h2>{{ post.title }}</h2></div>
                 <div><p>{{ post.body }}</p></div>
             </div>
             <div class="post_btn">
@@ -11,7 +11,21 @@
                 Удалить</my-button>
             </div>
         </div>
-    </div>
+    </div> -->
+    <li>
+        <!-- <h2>{{post.id}}</h2> -->
+		<h3>{{post.title}}</h3>
+		<p>
+			{{post.body}}
+		</p>
+		<div class="post_delete">
+            <my-button
+                 @click="$emit('remove', post)"
+                 style="align-self:flex-end;">
+                Удалить</my-button>
+        </div>
+        
+    </li>
 </template>
 <script>
 export default {
@@ -24,7 +38,7 @@ export default {
 }
 </script>
 <style scoped>
-.blog_post{
+/* .blog_post{
     background: #fff;
     border-radius: 10px;
     box-shadow: 1px 1px 1rem rgba(0, 0, 0, 0.3);
@@ -56,5 +70,52 @@ p {
 }
 .post_btn{
     align-self:flex-end;
+} */
+li {
+	display: inline-block;
+	width: 20%;
+	min-width: 330px;
+	max-width: 360px;
+    min-height: 400px;
+	padding: 20px 20px 20px;
+	vertical-align: top;
+	margin: 10px;
+	font-family: 'helvetica', san-serif;
+	background: white;
+	border: 1px solid teal;
+	text-align: left;
+    position: relative;
+}
+li h2 {
+	font-size: 114px;
+	margin: 0;
+	opacity: 0.2;
+    position: absolute;
+    right: 10%;
+    top: 10%;
+    float: left;
+    text-align: right;
+	transition: all 0.3s ease-in-out;
+}
+li h3 {
+	font-size: 20px;
+	color: black;
+	margin-bottom: 5px;
+}
+li p {
+	font-size: 16px;
+	line-height: 18px;
+	color: black;
+	margin-top: 5px;
+    margin-bottom: 15px;
+}
+li:hover h2 {
+    transform: translate(0%, -40%);
+	opacity: 0.6;
+}
+.post_delete{
+    position: absolute;
+    right: 5%;
+    bottom: 5%;
 }
 </style>

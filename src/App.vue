@@ -1,23 +1,35 @@
 <template>
     <div class="app">
         <h1>Страница с постами</h1>
-        <my-button
-        @click="showDialog">Добавить пост</my-button>
+        <div class="app_buttons">
+            <my-button
+                @click="showDialog">Добавить пост
+            </my-button>
+            <my-select
+                v-model="selectedSort"
+                :options="sortOptions"
+            >
+
+            </my-select>
+        </div>
+        
         <my-dialog v-model:show="dialogVisible">
             <post-form @create="createPost">
 
             </post-form>
         </my-dialog>
         
-        <post-list v-bind:posts="posts" @remove="removePost">
-
+        <post-list v-bind:posts="posts" @remove="removePost"
+        v-if="!isPostsLoading">
         </post-list>
+        <div v-else>Идет загрузка...</div>
     </div>
 </template>
 
 <script>
 import PostForm from "@/components/PostForm.vue";
 import PostList from "@/components/PostList.vue";
+import axios from "axios";
 export default {
     components: {
         PostForm, PostList,
@@ -25,14 +37,18 @@ export default {
     data() {
         return {
             posts: [
-                { id: 1, title: 'Название 1', body: 'Не следует, однако, забывать о том, что постоянное информационно-техническое обеспечение нашей деятельности обеспечивает широкому кругу специалистов участие в формировании экономической целесообразности принимаемых решений! Таким образом, выбранный нами инновационный путь играет важную роль в формировании форм воздействия. С другой стороны дальнейшее развитие различных форм деятельности требует от нас системного анализа модели развития?' },
-                { id: 2, title: 'Название 2', body: 'Не следует, однако, забывать о том, что постоянное информационно-техническое обеспечение нашей деятельности обеспечивает широкому кругу специалистов участие в формировании экономической целесообразности принимаемых решений! Таким образом, выбранный нами инновационный путь играет важную роль в формировании форм воздействия. С другой стороны дальнейшее развитие различных форм деятельности требует от нас системного анализа модели развития?' },
-                { id: 3, title: 'Название 3', body: 'Не следует, однако, забывать о том, что постоянное информационно-техническое обеспечение нашей деятельности обеспечивает широкому кругу специалистов участие в формировании экономической целесообразности принимаемых решений! Таким образом, выбранный нами инновационный путь играет важную роль в формировании форм воздействия. С другой стороны дальнейшее развитие различных форм деятельности требует от нас системного анализа модели развития?' },
-                { id: 4, title: 'Название 4', body: 'Не следует, однако, забывать о том, что постоянное информационно-техническое обеспечение нашей деятельности обеспечивает широкому кругу специалистов участие в формировании экономической целесообразности принимаемых решений! Таким образом, выбранный нами инновационный путь играет важную роль в формировании форм воздействия. С другой стороны дальнейшее развитие различных форм деятельности требует от нас системного анализа модели развития?' },
+
             ],
+            id: "",
             title: "",
             body: "",
             dialogVisible:false,
+            isPostsLoading: false,
+            selectedSort: '',
+            sortOptions:[
+                {value: 'title', name: 'По названию'},
+                {valie: 'body', name: 'По содержанию'}
+            ]
         }
     },
     methods: {
@@ -47,7 +63,22 @@ export default {
         },
         showDialog(){
             this.dialogVisible = true;
+        },
+        async fetchPosts(){
+            try{
+                this.isPostsLoading = true;
+                const response = await axios.get('https://jsonplaceholder.typicode.com/posts?_limit=10');
+                this.posts = response.data;
+                
+            }catch(e){
+                alert('Error')
+            } finally{
+                this.isPostsLoading = false;
+            }
         }
+    },
+    mounted(){
+        this.fetchPosts();
     }
 }
 </script>
@@ -61,5 +92,13 @@ export default {
 
 .app {
     padding: 20px;
+}
+.loader{
+    position: absolute;
+}
+.app_buttons{
+    display: flex;
+    justify-content: space-between;
+    margin:25px;
 }
 </style>
