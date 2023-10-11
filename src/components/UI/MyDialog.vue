@@ -6,19 +6,11 @@
     </div>
 </template>
 <script>
+import toogleMixin from '@/mixins/toobleMixin'
+
 export default {
     name:'my-dialog',
-    props:{
-        show: {
-            type: Boolean,
-            default: false
-        }
-    },
-    methods:{
-        hideDialog(){
-            this.$emit('update:show', false);
-        }
-    }
+    mixins: [toogleMixin]
 }
 </script>
 <style>
@@ -40,5 +32,6 @@ export default {
         min-width: 300px;
         padding: 20px;
         border: 3px solid teal;
+        
     }
 </style>

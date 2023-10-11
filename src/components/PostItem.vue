@@ -20,6 +20,10 @@
 		</p>
 		<div class="post_delete">
             <my-button
+                 @click="$router.push('/posts/'+ post.id)"
+                 style="align-self:flex-end; margin-right: 20px;">
+                Открыть</my-button>
+            <my-button
                  @click="$emit('remove', post)"
                  style="align-self:flex-end;">
                 Удалить</my-button>

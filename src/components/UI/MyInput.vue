@@ -16,7 +16,7 @@ export default {
 </script>
 <style scoped>
 .input{
-    width: 100%;
+    width: 90%;
     border: 1px solid teal;
     border-radius: 12px;
     padding: 10px 15px;
